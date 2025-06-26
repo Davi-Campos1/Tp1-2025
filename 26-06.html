@@ -1,0 +1,34 @@
+<html> 
+    <script>
+
+    let nomes = [];
+    let idades = [];
+
+    
+    for (let i = 0; i < 7; i++) {
+    let nome = prompt("Digite o nome da pessoa "+ (i+1) +"  :");
+    let idade = prompt("Digite a idade de "+nome+":");
+    idades.push(parseInt(idade));  
+    nomes.push(nome);              
+    }
+
+    
+    for (let i = 0; i < 7; i++) {
+    let nome = nomes[i];
+    let idade = idades[i];
+    
+    
+    if (idade >= 16 && idade < 18 ) {
+        alert(nome+ ", " +idade+" anos: Voto opcional.");
+    } else if (idade >= 18 && idade <= 65) {
+        alert(nome+ ", " +idade+" anos: Voto obrigatório.");
+    } else if(idade >=66 ){
+        alert(nome+", "+ idade+" anos: Voto opcional.");
+    }else {
+        alert(nome+", "+ idade+" anos: Não pode votar.");
+    }
+}
+    
+
+    </script>
+</html>
