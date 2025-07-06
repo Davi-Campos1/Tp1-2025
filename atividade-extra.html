@@ -1,0 +1,41 @@
+<html>
+    <script>
+
+function arredondar(valor) {
+  return Math.round(valor * 100) / 100;
+}
+
+
+let saldo = prompt("Digite o saldo inicial da aplicação:");
+let taxa = prompt("Digite a taxa de rendimento mensal (em %):");
+let meses = prompt("Digite a quantidade de meses da aplicação:");
+
+
+saldo = saldo * 1;
+taxa = taxa * 1;
+meses = meses * 1;
+
+
+if (saldo <= 0 || taxa <= 0 || meses <= 0) {
+  alert("Todos os valores devem ser maiores que zero.");
+} else {
+  let resultado = "";
+
+  for (let mes = 1; mes <= meses; mes++) {
+    let rendimento = saldo * (taxa / 100);
+    saldo = saldo + rendimento;
+
+    rendimento = arredondar(rendimento);
+    saldo = arredondar(saldo);
+
+    resultado += "No " + mes + "º mês a aplicação rendeu R$ " + rendimento + " e o total aplicado passou a ser R$ " + saldo + "\n";
+  }
+
+  resultado += "O saldo final da aplicação será de R$ " + saldo;
+
+ 
+  alert(resultado);
+}
+
+    </script>
+</html>
