@@ -1,0 +1,68 @@
+<h1>Calculadora Regra de 3</h1>
+
+<div style="text-align: center;">
+  <input type="number" id="a" value="" placeholder="Valor A"> ------------
+  <input type="number" id="b" value="" placeholder="Valor B">
+  <br><br>
+  <input type="number" id="c" value="" placeholder="Valor C">------------
+  <span style="font-weight: bold; font-size: 24px; margin-left: 8px;">x</span>
+</div>
+
+<br>
+<input type="button" value="Calcular" onclick="calcular()">
+<br><br>
+<h1 id="resultado"></h1>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 350px;
+    margin: 30px auto;
+    padding: 10px;
+    text-align: center;
+    background: #f9f9f9;
+  }
+  input[type=number] {
+    width: 70px;
+    padding: 6px;
+    font-size: 16px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+  }
+  input[type=button] {
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #3b82f6;
+    color: white;
+  }
+  input[type=button]:hover {
+    background-color: #2563eb;
+  }
+  #resultado {
+    color: #333;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+</style>
+
+<script>
+  function calcular(){
+      let A = a.value;
+      let B = b.value;
+      let C = c.value;
+
+     if (!A || !B || !C) {
+          resultado.innerHTML = "Preencha todos os campos corretamente.";
+          return;
+      }
+
+      let x = (B * C) / A;
+
+       resultado.innerHTML = `X = ${x}`;
+  }
+</script>
