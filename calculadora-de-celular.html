@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #eee;
+      text-align: center;
+      padding: 40px;
+    }
+
+    #tela {
+      width: 220px;
+      height: 40px;
+      font-size: 24px;
+      margin-bottom: 10px;
+      text-align: right;
+      padding: 5px;
+    }
+
+    button {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      margin: 5px;
+    }
+
+    .calc {
+      background: #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora</h1>
+  <div class="calc">
+    <input type="text" id="tela" disabled value="0"><br>
+
+    <button onclick="limpar()">C</button>
+    <button onclick="operador('/')">/</button>
+    <button onclick="operador('x')">x</button>
+    <button onclick="operador('-')">-</button><br>
+
+    <button onclick="numero('7')">7</button>
+    <button onclick="numero('8')">8</button>
+    <button onclick="numero('9')">9</button>
+    <button onclick="operador('+')">+</button><br>
+
+    <button onclick="numero('4')">4</button>
+    <button onclick="numero('5')">5</button>
+    <button onclick="numero('6')">6</button>
+    <button onclick="calcular()">=</button><br>
+
+    <button onclick="numero('1')">1</button>
+    <button onclick="numero('2')">2</button>
+    <button onclick="numero('3')">3</button>
+    <button onclick="numero('0')">0</button>
+  </div>
+
+  <script>
+    var tela = document.getElementById("tela")
+    var expressao = ""
+    var resultadoMostrado = false
+
+    function numero(n) {
+      if (resultadoMostrado) {
+        expressao = ""
+        resultadoMostrado = false
+      }
+      expressao += n
+      tela.value = expressao
+    }
+
+    function operador(op) {
+      if (resultadoMostrado) resultadoMostrado = false
+      var ultimo = expressao.slice(-1)
+      if ("+-/x".includes(ultimo)) {
+        expressao = expressao.slice(0, -1)
+      }
+      expressao += op
+      tela.value = expressao
+    }
+
+    function calcular() {
+      try {
+        var conta = expressao.replace(/x/g, '*')
+        var resultado = eval(conta)
+        tela.value = expressao + " = " + resultado
+        expressao = resultado.toString()
+        resultadoMostrado = true
+      } catch {
+        tela.value = "Erro"
+        expressao = ""
+      }
+    }
+
+    function limpar() {
+      expressao = ""
+      tela.value = "0"
+      resultadoMostrado = false
+    }
+  </script>
+
+</body>
+</html>
