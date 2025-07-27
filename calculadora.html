@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    input[type="number"] {
+      font-size: 24px;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      cursor: pointer;
+    }
+
+    #res {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora</h1>
+
+  <input type="number" id="n1"><br>
+  <input type="number" id="n2"><br><br>
+
+  <button id="btn-somar">+</button>
+  <button id="btn-sub">-</button><br><br>
+  <button id="btn-mult">×</button>
+  <button id="btn-div">÷</button><br><br>
+  <button id="btn-limpar">Limpar</button>
+
+  <p id="res">Aguardando valores...</p>
+
+  <script>
+    var n1 = document.getElementById("n1")
+    var n2 = document.getElementById("n2")
+    var res = document.getElementById("res")
+
+    function somar() {
+      var resultado = parseFloat(n1.value) + parseFloat(n2.value)
+      res.innerHTML = isNaN(resultado) ? "Digite dois números válidos!" : resultado
+    }
+
+    function sub() {
+      var resultado = parseFloat(n1.value) - parseFloat(n2.value)
+      res.innerHTML = isNaN(resultado) ? "Digite dois números válidos!" : resultado
+    }
+
+    function mult() {
+      var resultado = parseFloat(n1.value) * parseFloat(n2.value)
+      res.innerHTML = isNaN(resultado) ? "Digite dois números válidos!" : resultado
+    }
+
+    function div() {
+      var divisor = parseFloat(n2.value)
+      if (divisor === 0) {
+        res.innerHTML = "Não é possível dividir por zero!"
+      } else {
+        var resultado = parseFloat(n1.value) / divisor
+        res.innerHTML = isNaN(resultado) ? "Digite dois números válidos!" : resultado
+      }
+    }
+
+    function limpar() {
+      n1.value = ""
+      n2.value = ""
+      res.innerHTML = "Aguardando valores..."
+    }
+
+    document.getElementById("btn-somar").addEventListener("click", somar)
+    document.getElementById("btn-sub").addEventListener("click", sub)
+    document.getElementById("btn-mult").addEventListener("click", mult)
+    document.getElementById("btn-div").addEventListener("click", div)
+    document.getElementById("btn-limpar").addEventListener("click", limpar)
+  </script>
+
+</body>
+</html>
