@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .mostra {
+      display: block;
+    }
+    .esconde {
+      display: none;
+    }
+  </style>
+  <script>
+    function mudaVisibilidade(id) {
+      const elemento = document.getElementById(id);
+      if (elemento.className == "mostra") {
+        elemento.className = "esconde";
+      } else {
+        elemento.className = "mostra";
+      }
+      atualizarTextoBotao();
+    }
+
+    function toggleTodasListas(botao) {
+      const listas = document.querySelectorAll("ul");
+      
+      const todasEscondidas = Array.from(listas).every(lista => lista.className === "esconde");
+
+      listas.forEach(lista => {
+        lista.className = todasEscondidas ? "mostra" : "esconde";
+      });
+
+      atualizarTextoBotao();
+    }
+
+    function atualizarTextoBotao() {
+      const listas = document.querySelectorAll("ul");
+      const botao = document.getElementById("botaoToggle");
+      const todasEscondidas = Array.from(listas).every(lista => lista.className === "esconde");
+
+      botao.textContent = todasEscondidas ? "Expandir Tudo" : "Recolher Tudo";
+    }
+
+    
+    window.onload = atualizarTextoBotao;
+  </script>
+</head>
+<body>
+
+
+<button id="botaoToggle" onclick="toggleTodasListas(this)">Expandir Tudo</button>
+
+<ol>
+  <li onclick="mudaVisibilidade('listaTeste1')">Teste1
+    <ul id="listaTeste1" class="mostra">
+      <li>bla</li>
+      <li>bla</li>
+      <li>bla</li>
+    </ul>
+  </li>
+
+  <li onclick="mudaVisibilidade('listaTeste2')">Teste2
+    <ul id="listaTeste2" class="mostra">
+      <li>ble</li>
+      <li>ble</li>
+      <li>ble</li>
+    </ul>
+  </li>
+</ol>
+
+</body>
+</html>
