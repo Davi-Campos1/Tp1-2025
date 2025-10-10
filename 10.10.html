@@ -48,12 +48,12 @@
       respostaDiv.className = '';
 
       try {
-        // Verifica se nome existe
+       
         const resExiste = await fetch(`https://ola-tp1.onrender.com/existe?nome=${encodeURIComponent(nome)}`);
         const textoExiste = await resExiste.text();
         console.log('Resposta /existe:', textoExiste);
 
-        // Como resposta é texto 'true' ou 'false', convertemos:
+       
         const existe = textoExiste.trim().toLowerCase() === 'true';
 
         if (existe) {
@@ -62,7 +62,7 @@
           return;
         }
 
-        // Se não existe, insere
+       
         const resPost = await fetch('https://ola-tp1.onrender.com/nomes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
