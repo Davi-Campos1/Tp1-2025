@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro de Nomes</title>
+  <style>
+    #resposta { margin-top: 1em; color: green; }
+    #resposta.erro { color: red; }
+    #nomes-lista { margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <h1>Cadastro de Nomes</h1>
+
+  <div>
+    <h2>Adicionar um nome</h2>
+    <form id="form-nome">
+      <label for="nome">Nome: </label>
+      <input type="text" id="nome" name="nome" required />
+      <button type="submit">Salvar Nome</button>
+    </form>
+    <div id="resposta"></div>
+  </div>
+
+  <hr />
+
+  <div>
+    <h2>Listar Nomes</h2>
+    <button id="btn-listar">Exibir Nomes Cadastrados</button>
+    <div id="nomes-lista"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form-nome');
+    const respostaDiv = document.getElementById('resposta');
+    const nomesListaDiv = document.getElementById('nomes-lista');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = form.nome.value.trim();
+      if (!nome) {
+        respostaDiv.textContent = 'Por favor, digite um nome.';
+        respostaDiv.className = 'erro';
+        return;
+      }
+
+      respostaDiv.textContent = 'Verificando se o nome já existe...';
+      respostaDiv.className = '';
+
+      try {
+        // Verifica se nome existe
+        const resExiste = await fetch(`https://ola-tp1.onrender.com/existe?nome=${encodeURIComponent(nome)}`);
+        const textoExiste = await resExiste.text();
+        console.log('Resposta /existe:', textoExiste);
+
+        // Como resposta é texto 'true' ou 'false', convertemos:
+        const existe = textoExiste.trim().toLowerCase() === 'true';
+
+        if (existe) {
+          respostaDiv.textContent = `O nome "${nome}" já está cadastrado.`;
+          respostaDiv.className = 'erro';
+          return;
+        }
+
+        // Se não existe, insere
+        const resPost = await fetch('https://ola-tp1.onrender.com/nomes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome })
+        });
+
+        const textoResposta = await resPost.text();
+        console.log('Resposta do POST:', textoResposta);
+
+        respostaDiv.textContent = textoResposta || 'Nome cadastrado com sucesso!';
+        respostaDiv.className = 'sucesso';
+
+        form.reset();
+
+      } catch (err) {
+        respostaDiv.textContent = 'Erro: ' + err.message;
+        respostaDiv.className = 'erro';
+        console.error(err);
+      }
+    });
+
+    document.getElementById('btn-listar').addEventListener('click', async () => {
+      nomesListaDiv.textContent = 'Carregando...';
+
+      try {
+        const res = await fetch('https://ola-tp1.onrender.com/nomes');
+        if (!res.ok) throw new Error('Erro na requisição');
+
+        const texto = await res.text();
+        console.log('Resposta da lista:', texto);
+
+        if (texto.trim().startsWith('<')) {
+          // Se for HTML, insere direto
+          nomesListaDiv.innerHTML = texto;
+        } else if (texto.trim()) {
+          // Se for texto simples, exibe dentro de <pre>
+          nomesListaDiv.innerHTML = `<pre>${texto}</pre>`;
+        } else {
+          nomesListaDiv.textContent = 'Nenhum nome cadastrado.';
+        }
+      } catch (err) {
+        nomesListaDiv.textContent = 'Erro ao carregar nomes: ' + err.message;
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
