@@ -3,18 +3,17 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000;
 
-// Configuração dos Middlewares
-app.use(express.urlencoded({ extended: true })); // Para ler os dados do formulário (POST)
-app.use(cookieParser()); // Para gerenciar sessões de usuários individuais (Desafio)
 
-// Armazenamento em memória dos jogos (Simulando um banco de dados)
-// Estrutura: { 'id-do-usuario': numero_secreto }
+app.use(express.urlencoded({ extended: true })); 
+app.use(cookieParser()); 
+
+
 const activeGames = {};
 
-// Função auxiliar para gerar ID único (simples)
+
 const generateSessionId = () => Math.random().toString(36).substring(2) + Date.now().toString(36);
 
-// Função para gerar o HTML da página (Renderização Server-Side)
+
 const renderPage = (message = null, type = 'info', lastGuess = '') => {
     let messageHtml = '';
     
@@ -65,33 +64,33 @@ const renderPage = (message = null, type = 'info', lastGuess = '') => {
     `;
 };
 
-// Rota GET: Inicializa o jogo e exibe o formulário
+
 app.get('/', (req, res) => {
     let userId = req.cookies.userId;
 
-    // Se o usuário não tem ID ou o servidor reiniciou (perdeu a memória), cria novo jogo
+    
     if (!userId || !activeGames[userId]) {
         userId = generateSessionId();
         const secretNumber = Math.floor(Math.random() * 100) + 1;
         
-        // Salva o número secreto associado a este usuário específico (Desafio)
+        
         activeGames[userId] = secretNumber;
         
-        // Envia o cookie para o navegador do usuário
+      
         res.cookie('userId', userId, { httpOnly: true });
         
-        console.log(`Novo jogo iniciado. Usuário: ${userId}, Número: ${secretNumber}`); // Log para debug
+        console.log(`Novo jogo iniciado. Usuário: ${userId}, Número: ${secretNumber}`); 
     }
 
     res.send(renderPage());
 });
 
-// Rota POST: Processa o palpite
+
 app.post('/', (req, res) => {
     const userId = req.cookies.userId;
     const palpite = parseInt(req.body.palpite);
 
-    // Validação de segurança: se não tem jogo ativo, redireciona para criar um
+   
     if (!userId || activeGames[userId] === undefined) {
         return res.redirect('/');
     }
@@ -100,14 +99,14 @@ app.post('/', (req, res) => {
     let message = '';
     let type = 'error';
 
-    // Lógica do Jogo
+    
     if (isNaN(palpite)) {
         message = 'Por favor, insira um número válido.';
     } else if (palpite === secretNumber) {
         message = `Parabéns! Você acertou. O número era ${secretNumber}. O jogo foi reiniciado.`;
         type = 'success';
         
-        // Reinicia o jogo para este usuário (Gera novo número)
+       
         activeGames[userId] = Math.floor(Math.random() * 100) + 1;
         console.log(`Usuário ${userId} ganhou. Novo número: ${activeGames[userId]}`);
     } else if (palpite > secretNumber) {
@@ -116,7 +115,7 @@ app.post('/', (req, res) => {
         message = `Você chutou ${palpite}. É muito BAIXO! Tente um número maior.`;
     }
 
-    // Retorna a página com o resultado
+    
     res.send(renderPage(message, type, type === 'success' ? '' : palpite));
 });
 
