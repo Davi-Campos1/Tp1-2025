@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>TechPoint | Contato</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">TECH<span class="text-primary">POINT</span></a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto text-uppercase small">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/produto">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/fotos">Galeria</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/contato">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-5">
+                <div class="card shadow-sm border-0 p-4 mb-4">
+                    <h3 class="fw-bold">Nossa Sede</h3>
+                    <p>Avenida da Tecnologia, 1024<br>Vale do Silício - SP</p>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="card shadow border-0 p-4">
+                    <h3 class="mb-4 fw-bold">Envie uma Mensagem</h3>
+                    <form action="/enviar" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Nome Completo</label>
+                            <input type="text" name="nomeCompleto" class="form-control bg-light" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" name="email" class="form-control bg-light" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Assunto</label>
+                            <select name="assunto" class="form-select bg-light">
+                                <option value="Suporte Técnico">Suporte Técnico</option>
+                                <option value="Vendas">Vendas</option>
+                                <option value="Garantia">Garantia</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mensagem</label>
+                            <textarea name="mensagem" class="form-control bg-light" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold">ENVIAR AGORA</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-secondary py-5 text-center">
+        <p class="mb-0 text-white">© 2026 TechPoint Store.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
